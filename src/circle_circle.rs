@@ -1,6 +1,6 @@
 use crate::circle::Circle;
 
-fn circle_circle_collision(c1: &Circle, c2: &Circle) -> bool {
+pub fn circle_circle_collision(c1: &Circle, c2: &Circle) -> bool {
     c1.center.euclidean_distance(&c2.center) <= c1.radius + c2.radius
 }
 

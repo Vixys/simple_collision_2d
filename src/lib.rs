@@ -1,4 +1,5 @@
 pub mod circle;
+pub mod collidable;
 pub mod point;
 pub mod rectangle;
 

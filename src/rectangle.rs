@@ -8,6 +8,17 @@ pub struct Rectangle {
     pub height: f32,
 }
 
+impl Default for Rectangle {
+    fn default() -> Self {
+        Self {
+            top: 0.5,
+            left: -0.5,
+            width: 1.,
+            height: 1.,
+        }
+    }
+}
+
 impl Rectangle {
     pub fn center(&self) -> Point {
         Point {
