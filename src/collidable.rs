@@ -11,22 +11,25 @@ pub enum Collidable {
     Point(Point),
     Circle(Circle),
     Rectangle(Rectangle),
+    // TODO: Add SAT collision for convex polygon
+    // See https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#separating_axis_theorem
+    // ConvexPolygon(ConvexPolygon)
 }
 
 impl Collidable {
     pub fn collides_with(&self, other: &Collidable) -> bool {
         match (self, other) {
             (Collidable::Point(p1), Collidable::Point(p2)) => point_point_collision(p1, p2),
+            (Collidable::Circle(c1), Collidable::Circle(c2)) => circle_circle_collision(c1, c2),
+            (Collidable::Rectangle(r1), Collidable::Rectangle(r2)) => {
+                rectangle_rectangle_collision(r1, r2)
+            }
             (Collidable::Point(p), Collidable::Circle(c))
             | (Collidable::Circle(c), Collidable::Point(p)) => point_circle_collision(p, c),
             (Collidable::Point(p), Collidable::Rectangle(r))
             | (Collidable::Rectangle(r), Collidable::Point(p)) => point_rectangle_collision(p, r),
-            (Collidable::Circle(c1), Collidable::Circle(c2)) => circle_circle_collision(c1, c2),
             (Collidable::Circle(c), Collidable::Rectangle(r))
             | (Collidable::Rectangle(r), Collidable::Circle(c)) => circle_rectangle_collision(c, r),
-            (Collidable::Rectangle(r1), Collidable::Rectangle(r2)) => {
-                rectangle_rectangle_collision(r1, r2)
-            }
         }
     }
 }
