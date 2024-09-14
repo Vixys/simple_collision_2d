@@ -1,6 +1,5 @@
 use crate::{
-    point_circle::point_circle_collision, point_rectangle::point_rectangle_collision,
-    rectangle::Rectangle, Circle, Point,
+    circle::Circle, point::Point, point_circle::point_circle_collision, rectangle::Rectangle,
 };
 
 pub fn circle_rectangle_collision(c: &Circle, r: &Rectangle) -> bool {
@@ -11,8 +10,6 @@ pub fn circle_rectangle_collision(c: &Circle, r: &Rectangle) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::Point;
-
     use super::*;
 
     #[test]

@@ -1,4 +1,4 @@
-use crate::Point;
+use crate::point::Point;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Rectangle {

@@ -1,4 +1,4 @@
-use crate::{point_rectangle::point_rectangle_collision, rectangle::Rectangle, Point};
+use crate::{point_rectangle::point_rectangle_collision, rectangle::Rectangle};
 
 pub fn rectangle_rectangle_collision(r1: &Rectangle, r2: &Rectangle) -> bool {
     point_rectangle_collision(&r1.top_left(), r2)

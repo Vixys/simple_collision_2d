@@ -1,4 +1,4 @@
-use crate::{rectangle::Rectangle, Point};
+use crate::{point::Point, rectangle::Rectangle};
 
 pub fn point_rectangle_collision(p: &Point, r: &Rectangle) -> bool {
     p.x <= r.right() && p.x >= r.left && p.y <= r.top && p.y >= r.bottom()

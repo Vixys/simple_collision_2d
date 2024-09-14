@@ -1,4 +1,4 @@
-use crate::{Circle, Point};
+use crate::{circle::Circle, point::Point};
 
 pub fn point_circle_collision(p: &Point, c: &Circle) -> bool {
     p.euclidean_distance(&c.center) <= c.radius

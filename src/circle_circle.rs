@@ -1,4 +1,4 @@
-use crate::Circle;
+use crate::circle::Circle;
 
 fn circle_circle_collision(c1: &Circle, c2: &Circle) -> bool {
     c1.center.euclidean_distance(&c2.center) <= c1.radius + c2.radius
@@ -6,7 +6,7 @@ fn circle_circle_collision(c1: &Circle, c2: &Circle) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::Point;
+    use crate::point::Point;
 
     use super::*;
 

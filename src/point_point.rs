@@ -1,4 +1,4 @@
-use crate::Point;
+use crate::point::Point;
 
 fn point_point_collision(p1: &Point, p2: &Point) -> bool {
     p1 == p2
