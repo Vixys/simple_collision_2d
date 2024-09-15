@@ -1,4 +1,7 @@
-use crate::point::Point;
+use crate::{
+    point::{Point, Vector},
+    sat::{project::Sat, projection::Projection},
+};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Rectangle {
@@ -6,6 +9,36 @@ pub struct Rectangle {
     pub left: f32,
     pub width: f32,
     pub height: f32,
+}
+
+impl Sat for Rectangle {
+    fn project(&self, axis: &Vector) -> Projection {
+        let vertices = vec![self.top_right(), self.bottom_right(), self.bottom_left()];
+
+        let mut min = axis.dot(&self.top_left());
+        let mut max = min;
+        for v in vertices {
+            let p = axis.dot(&v);
+            min = min.min(p);
+            max = max.max(p);
+        }
+        Projection { min, max }
+    }
+
+    fn axes(&self) -> Vec<Vector> {
+        vec![
+            (self.top_right() - self.top_left()).perp(),
+            (self.bottom_right() - self.bottom_left()).perp(),
+        ]
+    }
+
+    fn is_curved(&self) -> bool {
+        false
+    }
+
+    fn get_center(&self) -> Vector {
+        unreachable!("This is not supposed to be called")
+    }
 }
 
 impl Default for Rectangle {

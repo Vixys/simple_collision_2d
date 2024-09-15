@@ -2,6 +2,7 @@ pub mod circle;
 pub mod collidable;
 pub mod point;
 pub mod rectangle;
+pub mod sat;
 
 mod circle_circle;
 mod circle_rectangle;

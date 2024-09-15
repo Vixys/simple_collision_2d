@@ -1,19 +1,21 @@
-use crate::{
-    circle::Circle, circle_circle::circle_circle_collision,
-    circle_rectangle::circle_rectangle_collision, point::Point,
-    point_circle::point_circle_collision, point_point::point_point_collision,
-    point_rectangle::point_rectangle_collision, rectangle::Rectangle,
-    rectangle_rectangle::rectangle_rectangle_collision,
-};
+use crate::circle::Circle;
+use crate::circle_circle::circle_circle_collision;
+use crate::circle_rectangle::circle_rectangle_collision;
+use crate::point::Point;
+use crate::point_circle::point_circle_collision;
+use crate::point_point::point_point_collision;
+use crate::point_rectangle::point_rectangle_collision;
+use crate::rectangle::Rectangle;
+use crate::rectangle_rectangle::rectangle_rectangle_collision;
+use crate::sat::polygon::Polygon;
+use crate::sat::sat_collision;
 
 #[derive(Debug)]
 pub enum Collidable {
     Point(Point),
     Circle(Circle),
     Rectangle(Rectangle),
-    // TODO: Add SAT collision for convex polygon
-    // See https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#separating_axis_theorem
-    // ConvexPolygon(ConvexPolygon)
+    Polygon(Polygon),
 }
 
 impl Collidable {
@@ -30,12 +32,23 @@ impl Collidable {
             | (Collidable::Rectangle(r), Collidable::Point(p)) => point_rectangle_collision(p, r),
             (Collidable::Circle(c), Collidable::Rectangle(r))
             | (Collidable::Rectangle(r), Collidable::Circle(c)) => circle_rectangle_collision(c, r),
+            (Collidable::Point(p), Collidable::Polygon(poly))
+            | (Collidable::Polygon(poly), Collidable::Point(p)) => sat_collision(poly, p),
+            (Collidable::Circle(_c), Collidable::Polygon(_p))
+            | (Collidable::Polygon(_p), Collidable::Circle(_c)) => {
+                panic!("polygon and circle collision not supported yet!")
+            }
+            (Collidable::Rectangle(r), Collidable::Polygon(p))
+            | (Collidable::Polygon(p), Collidable::Rectangle(r)) => sat_collision(p, r),
+            (Collidable::Polygon(p1), Collidable::Polygon(p2)) => sat_collision(p1, p2),
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::point::Vector;
+
     use super::*;
 
     #[test]
@@ -84,5 +97,61 @@ mod tests {
         let r = Collidable::Rectangle(Rectangle::default());
 
         assert!(r.collides_with(&r));
+    }
+
+    #[test]
+    fn test_polygon_point() {
+        let poly = Collidable::Polygon(Polygon::new(vec![
+            Vector::new(0., 1.),
+            Vector::new(1., -1.),
+            Vector::new(-1., -1.),
+        ]));
+        let point = Collidable::Point(Point::default());
+
+        assert!(poly.collides_with(&point));
+        assert!(point.collides_with(&poly));
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_polygon_circle() {
+        let poly = Collidable::Polygon(Polygon::new(vec![
+            Vector::new(0., 1.),
+            Vector::new(1., -1.),
+            Vector::new(-1., -1.),
+        ]));
+        let c = Collidable::Circle(Circle::default());
+
+        poly.collides_with(&c);
+    }
+
+    #[test]
+    fn test_polygon_rectangle() {
+        let poly = Collidable::Polygon(Polygon::new(vec![
+            Vector::new(0., 1.),
+            Vector::new(1., -1.),
+            Vector::new(-1., -1.),
+        ]));
+        let r = Collidable::Rectangle(Rectangle::default());
+
+        assert!(poly.collides_with(&r));
+        assert!(r.collides_with(&poly));
+    }
+
+    #[test]
+    fn test_polygon_polygon() {
+        let p1 = Collidable::Polygon(Polygon::new(vec![
+            Vector::ZERO,
+            Vector::new(1., 0.),
+            Vector::new(0.5, 1.),
+        ]));
+        let p2 = Collidable::Polygon(Polygon::new(vec![
+            Vector::new(0.5, 0.5),
+            Vector::new(0., 1.5),
+            Vector::new(1., 1.5),
+        ]));
+
+        assert!(p1.collides_with(&p2));
+        assert!(p2.collides_with(&p1));
     }
 }
