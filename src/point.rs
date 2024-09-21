@@ -81,6 +81,13 @@ impl Vector {
         Self { x, y }
     }
 
+    pub fn from_array(pts: [f32; 2]) -> Self {
+        Self {
+            x: pts[0],
+            y: pts[1],
+        }
+    }
+
     pub fn euclidean_distance(&self, other: &Self) -> f32 {
         (*other - *self).magnitude()
     }
