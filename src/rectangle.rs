@@ -1,5 +1,5 @@
 use crate::{
-    point::{Point, Vector},
+    vector::{Point, Vector},
     sat::{project::Sat, projection::Projection},
 };
 

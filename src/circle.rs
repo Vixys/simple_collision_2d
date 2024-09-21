@@ -1,5 +1,5 @@
-use crate::point::Point;
-use crate::point::Vector;
+use crate::vector::Point;
+use crate::vector::Vector;
 use crate::sat::project::Sat;
 use crate::sat::projection::Projection;
 

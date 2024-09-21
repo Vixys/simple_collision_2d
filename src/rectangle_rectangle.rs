@@ -1,10 +1,10 @@
-use crate::{point_rectangle::point_rectangle_collision, rectangle::Rectangle};
+use crate::{vector_rectangle::vector_rectangle_collision, rectangle::Rectangle};
 
 pub fn rectangle_rectangle_collision(r1: &Rectangle, r2: &Rectangle) -> bool {
-    point_rectangle_collision(&r1.top_left(), r2)
-        || point_rectangle_collision(&r1.top_right(), r2)
-        || point_rectangle_collision(&r1.bottom_left(), r2)
-        || point_rectangle_collision(&r1.bottom_right(), r2)
+    vector_rectangle_collision(&r1.top_left(), r2)
+        || vector_rectangle_collision(&r1.top_right(), r2)
+        || vector_rectangle_collision(&r1.bottom_left(), r2)
+        || vector_rectangle_collision(&r1.bottom_right(), r2)
 }
 
 #[cfg(test)]

@@ -19,7 +19,7 @@ pub fn sat_collision(p1: &dyn Sat, p2: &dyn Sat) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::point::Vector;
+    use crate::vector::Vector;
     use crate::sat::polygon::Polygon;
 
     use super::*;

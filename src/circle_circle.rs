@@ -6,7 +6,7 @@ pub fn circle_circle_collision(c1: &Circle, c2: &Circle) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::point::Point;
+    use crate::vector::Point;
 
     use super::*;
 

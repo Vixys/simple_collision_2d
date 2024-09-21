@@ -1,4 +1,4 @@
-use crate::point::{Point, Vector};
+use crate::vector::{Point, Vector};
 
 use super::{project::Sat, projection::Projection};
 

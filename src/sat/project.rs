@@ -1,4 +1,4 @@
-use crate::point::Vector;
+use crate::vector::Vector;
 
 use super::projection::Projection;
 
